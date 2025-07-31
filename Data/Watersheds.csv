@@ -1,0 +1,40 @@
+Watershed,WaterShed,AltName,Grazing,FireInterval_yr,FireSeason,Description
+1D,001d,,Ungrazed,1,Spring,Ungrazed and scheduled prescribed burned annually in the spring.
+20B,020b,,Ungrazed,20,Spring,Ungrazed and scheduled prescribed burned every 20 years in the spring.
+2C,002c,,Ungrazed,2,Spring,Ungrazed and scheduled prescribed burned every 2 years in the spring.
+2D,002d,,Ungrazed,2,Spring,Ungrazed and scheduled prescribed burned every 2 years in the spring
+4A,004a,,Ungrazed,4,Spring,Ungrazed and scheduled prescribed burned every 4 years in the spring
+4B,004b,,Ungrazed,4,Spring,Ungrazed and scheduled prescribed burned every 4 years in the spring
+4F,004f,,Ungrazed,4,Spring,Ungrazed and scheduled prescribed burned every 4 years in the spring
+C1A,C01A,,Cattle,1,Spring,Seasonally grazed (~01 May to ~ Sep. 01) by cattle and scheduled prescribed burned annually in the spring.
+C1SB,C1SB,,Cattle,1,Spring,Seasonally grazed (~01 May to ~ Sep. 01) by cattle and scheduled prescribed burned annually in the spring.
+C3A,C03A,,Cattle,3,Spring,Seasonally grazed (~01 May to ~ Sep. 01) by cattle and scheduled prescribed burned every 3 years in the spring.
+C3B,C03B,,Cattle,3,Spring,Seasonally grazed (~01 May to ~ Sep. 01) by cattle and scheduled prescribed burned every 3 years in the spring.
+C3C,C03C,,Cattle,3,Spring,Seasonally grazed (~01 May to ~ Sep. 01) by cattle and scheduled prescribed burned every 3 years in the spring.
+C3SA,C3SA,,Cattle,3,Spring,Seasonally grazed (~01 May to ~ Sep. 01) by cattle and scheduled prescribed burned every 3 years in the spring.
+C3SB,C3SB,,Cattle,3,Spring,Seasonally grazed (~01 May to ~ Sep. 01) by cattle and scheduled prescribed burned every 3 years in the spring.
+C3SC,C3SC,,Cattle,3,Spring,Seasonally grazed (~01 May to ~ Sep. 01) by cattle and scheduled prescribed burned every 3 years in the spring.
+FA,00fa,,Ungrazed,1,Fall,Ungrazed and scheduled prescribed burned annually in the fall (November).
+FB,00fb,,Ungrazed,1,Fall,Ungrazed and scheduled prescribed burned annually in the fall (November).
+N1A,n01a,,Bison,1,Spring,Year-long grazing by bison and scheduled prescribed burned annually in the spring.
+N1B ,n01b,,Bison,1,Spring,Year-long grazing by bison and scheduled prescribed burned annually in the spring.
+N20A,n20a,,Bison,20,Spring,Year-long grazing by bison and scheduled prescribed burned every 20 years in the spring.
+N20B,n20b,,Bison,20,Spring,Year-long grazing by bison and scheduled prescribed burned every 20 years in the spring.
+N2A,n02a,,Bison,2,Spring,Year-long grazing by bison and scheduled prescribed burned every 2 years in the spring.
+N2B,n02b,,Bison,2,Spring,Year-long grazing by bison and scheduled prescribed burned every 2 years in the spring.
+N4A,n04a,,Bison,4,Spring,Year-long grazing by bison and scheduled prescribed burned every 4 years in the spring
+N4D ,n04d,,Bison,4,Spring,Year-long grazing by bison and scheduled prescribed burned every 4 years in the spring.
+R1A,020a,r01a,Ungrazed,1,Spring,"Ungrazed and scheduled unburned through 2000, scheduled prescribed burned annually in the spring beginning 2001."
+R1A,r01a,020a,Ungrazed,1,Spring,"Ungrazed and scheduled unburned through 2000, scheduled prescribed burned annually in the spring beginning 2001."
+R1B,r01b,,Ungrazed,1,Spring,"Ungrazed and scheduled unburned through 2000, scheduled prescribed burned annually in the spring beginning 2001"
+R20A,001a,r20a,Ungrazed,20,Spring,"Ungrazed and scheduled prescribed burned annually through 2000, scheduled prescribed burned every 20 years in the spring thereafter."
+R20A,r20a,001a,Ungrazed,20,Spring,"Ungrazed and scheduled prescribed burned annually through 2000, scheduled prescribed burned every 20 years in the spring thereafter."
+R20B,001c,r20b,Ungrazed,20,Spring,"Ungrazed and scheduled prescribed burned annually through 2000, scheduled prescribed burned every 20 years in the spring thereafter."
+R20B,020d,r20b,Ungrazed,20,Spring,"Ungrazed and scheduled prescribed burned annually through 2000, scheduled prescribed burned every 20 years in the spring thereafter."
+R20B,r20b,"001c, 020d",Ungrazed,20,Spring,"Ungrazed and scheduled prescribed burned annually through 2000, scheduled prescribed burned every 20 years in the spring thereafter."
+SpA,0spa,,Ungrazed,1,Spring,Ungrazed and scheduled prescribed burned annually in the spring.
+SpB,0spb,,Ungrazed,1,Spring,Ungrazed and scheduled prescribed burned annually in the spring.
+SuA,0sua,,Ungrazed,2,Summer,Ungrazed and scheduled prescribed burned every 2 years in the summer.
+SuB,0sub,,Ungrazed,2,Summer,Ungrazed and scheduled prescribed burned every 2 years in the summer
+WA,00wa,,Ungrazed,1,Winter,Ungrazed and scheduled prescribed burned annually in the winter (February).
+WB,00wb,,Ungrazed,1,Winter,Ungrazed and scheduled prescribed burned annually in the winter (February).

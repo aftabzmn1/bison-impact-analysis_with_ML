@@ -14,6 +14,7 @@ load data
 veg_bison<- read.csv("../Data/knb-lter-knz/PVC021.csv")
 veg_cattle <- read.csv("../Data/Cattle grazed watersheds/PBG011.csv")
 Meteorological_data <- read.csv("../Data/Meteorological data from the konza prairie/AWE012.csv")
+watersheds<- read.csv("../Data/Watersheds.csv")
 ```
 
 ```{r}
@@ -76,6 +77,17 @@ yearly_temp <- aggregate(TAVE ~ RecYear,
 merged_data$TAVE <- NULL
 merged_data <- merge(merged_data, yearly_temp, by = "RecYear", all.x = TRUE)
 
+```
+```{r}
+# Save data
+write.csv(merged_data, "merged_data.csv", row.names = FALSE)
+```
+```{r}
+# Add fire data to merged dataset by matching watershed names
+merged_data <- merge(merged_data, 
+                     watersheds[, c("WaterShed", "FireInterval_yr", "FireSeason","Description")],                           # select fire columns
+                     by = "WaterShed",    # match on watershed name
+                     all.x = TRUE)        # keep all vegetation records
 ```
 ```{r}
 # Save data
