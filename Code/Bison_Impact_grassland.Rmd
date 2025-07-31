@@ -54,7 +54,7 @@ ifelse(str_starts(vegetation$WaterShed, "n"), "Bison Grazed",
 unique(vegetation[c("WaterShed", "grazing_treatment")])
 ```
 ```{r}
-rm(veg_bison)
+rm(veg_cattle)
 ```
 
 
