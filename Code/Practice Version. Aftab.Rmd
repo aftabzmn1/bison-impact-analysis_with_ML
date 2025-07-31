@@ -1,0 +1,56 @@
+---
+title: "Cattle_Bison_Ungrazed_Vegetation"
+output: html_document
+date: "2025-07-31"
+---
+
+load packages.tidyverse is a collection of R packages (like dplyr, ggplot2, readr, etc.) designed for data science.
+```{r}
+library(tidyverse)
+
+```
+load data
+```{r}
+veg_bison<- read.csv("../Data/knb-lter-knz/PVC021.csv")
+veg_cattle <- read.csv("../Data/Cattle grazed watersheds/PBG011.csv")
+Meteorological_data <- read.csv("../Data/Meteorological data from the konza prairie/AWE012.csv")
+watersheds<- read.csv("../Data/Watersheds.csv")
+```
+```{r}
+summary (veg_bison)
+summary (veg_cattle)
+```
+```{r}
+names(veg_bison)
+names(veg_cattle)
+```
+```{r}
+# Rename cattle-grazed dataset column names to match bison-grazed dataset
+names(veg_cattle) <- c("DataCode", "RecType", "RecYear", "RecMonth", "RecDay",
+                       "WaterShed", "SoilType", "Transect", "Plot", "SpeCode",
+                       "AB_genus", "AB_species", "Cover", "Pid", "Comments")
+```
+```{r}
+names(veg_bison)
+names(veg_cattle)
+```
+```{r}
+#Combine both datasets into one
+vegetation <- rbind(veg_bison, veg_cattle)
+```
+Take the watershed names in the column, and tell R to treat them as groups or labels, not as text.
+```{r}
+vegetation$WaterShed <- factor(vegetation$WaterShed)
+```
+This returns a vector of all the unique (non-duplicate) values in the WaterShed column of vegetation data frame.
+```{r}
+unique(vegetation$WaterShed)
+```
+```{r}
+# Categorize watersheds
+vegetation$grazing_treatment <- ifelse(str_starts(vegetation$WaterShed, "C"),"Cattle Grazed",
+ifelse(str_starts(vegetation$WaterShed, "n"), "Bison Grazed", 
+"Ungrazed"))
+# Show unique watersheds with their treatment types
+unique(vegetation[c("WaterShed", "grazing_treatment")])
+```

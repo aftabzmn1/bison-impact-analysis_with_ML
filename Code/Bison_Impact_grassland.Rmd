@@ -29,7 +29,7 @@ names(veg_cattle)
 # Rename cattle-grazed dataset column names to match bison-grazed dataset
 names(veg_cattle) <- c("DataCode", "RecType", "RecYear", "RecMonth", "RecDay",
                        "WaterShed", "SoilType", "Transect", "Plot", "SpeCode",
-                       "AB_genus", "AB_species", "Cover", "Pid", "Comments")
+                       "AB_genus", "AB_species", "CoverClass", "Pid", "Comments")
 ```
 ```{r}
 names(veg_bison)
@@ -94,11 +94,63 @@ merged_data <- merge(merged_data,
                      by = "WaterShed",    # match on watershed name
                      all.x = TRUE)        # keep all vegetation records
 ```
+```{r}
+
+```
+```{r}
+merged_data <- merged_data %>%
+  mutate(
+    #create scientific name
+    scientific_name = paste(merged_data$AB_genus, merged_data$AB_species),
+    #convert cover classes to percent cover
+    pctCover = case_match (
+      CoverClass, 
+      1 ~ mean(c(0, 1)),
+      2 ~ mean(c(2, 5)),
+      3 ~ mean(c(5, 25)),
+      4 ~ mean(c(25, 50)),
+      5 ~ mean(c(50, 75)),
+      6 ~ mean(c(75, 95)),
+      7 ~ mean(c(95, 100))
+    ),
+    
+    #standardize transect IDs
+    transect = case_match(
+      Transect,
+      "a" ~ "a",
+      "A" ~ "a",
+      "b" ~ "b",
+      "B" ~ "b",
+      "c" ~ "c",
+      "C" ~ "c",
+      "d" ~ "d",
+      "D" ~ "d"),
+    #create plot IDs
+    plot_ID = paste0(WaterShed,
+                     Plot,
+                     transect,
+                     SoilType,
+                     RecYear,
+                     RecMonth,
+                     RecDay))
+```
+
+```{r}
+spp_matrix <- merged_data %>% 
+  #remove duplicate row
+  filter(!(plot_ID == "004b1dt2024816" &
+           scientific_name == "teucri canad" &
+           CoverClass == 1)) %>% 
+  pivot_wider(id_cols = plot_ID,
+              names_from = scientific_name,
+              values_from = pctCover,
+              values_fill = 0)
+```
 
 
 ```{r}
-# Save data
-write.csv(merged_data, "merged_data.csv", row.names = FALSE)
+merged_data$AB_genus<- NULL 
+merged_data$AB_species<- NULL 
 ```
 
 
