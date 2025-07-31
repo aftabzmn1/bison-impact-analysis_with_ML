@@ -68,12 +68,23 @@ colnames(Meteorological_data)[colnames(Meteorological_data) == "RECDAY"] <- "Rec
 Meteorological_data[c("TAVE", "DHUMID", "DSRAD", "DPPT")] <- lapply(Meteorological_data[c("TAVE", "DHUMID", "DSRAD", "DPPT")], as.numeric)
 
 # Calculate yearly averages directly from meteorological data (months 4-10). create a yearly_temp dataframe with two colums; RecYear and Average of Meteorological data
-yearly_temp <- aggregate(cbind(TAVE,DHUMID,DSRAD,DPPT) ~ RecYear, 
-                        data = Meteorological_data[Meteorological_data$RecMonth >= 4 & Meteorological_data$RecMonth <= 10, ],
-                        FUN = mean, na.rm = TRUE)
-
+#yearly_temp <- aggregate(cbind(TAVE,DHUMID,DSRAD,DPPT) ~ RecYear, 
+#                        data = Meteorological_data[Meteorological_data$RecMonth >= 4 & Meteorological_data$RecMonth <= 10, ],
+#                        FUN = mean, na.rm = TRUE)
+yearly_temp2 <- Meteorological_data%>% 
+  group_by(RecYear)%>%
+  filter(RecMonth %in% seq(4,10,1)) %>% 
+  summarise(mean_temp = mean(TAVE, na.rm= TRUE),
+            mean_DHUMID = mean (DHUMID, na.rm = TRUE),
+            mean_DSRAD = mean (DSRAD, na.rm = TRUE),
+            mean_DPPT = mean (DPPT, na.rm = TRUE))
 # Merge vegetation data with yearly averages only
-merged_data <- merge(vegetation, yearly_temp, by = "RecYear", all.x = TRUE)
+merged_data <- merge(vegetation, yearly_temp2, by = "RecYear", all.x = TRUE)
+```
+
+```{r}
+# Merge genus and species columns with space
+merged_data$species_name <- paste(merged_data$AB_genus, merged_data$AB_species, sep = " ")
 ```
 
 ```{r}
@@ -83,6 +94,7 @@ merged_data <- merge(merged_data,
                      by = "WaterShed",    # match on watershed name
                      all.x = TRUE)        # keep all vegetation records
 ```
+
 
 ```{r}
 # Save data
