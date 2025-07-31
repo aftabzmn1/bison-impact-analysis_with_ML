@@ -13,6 +13,7 @@ load data
 ```{r}
 veg_bison<- read.csv("../Data/knb-lter-knz/PVC021.csv")
 veg_cattle <- read.csv("../Data/Cattle grazed watersheds/PBG011.csv")
+Meteorological_data <- read.csv("../Data/Meteorological data from the konza prairie/AWE012.csv")
 ```
 
 ```{r}
@@ -54,8 +55,34 @@ ifelse(str_starts(vegetation$WaterShed, "n"), "Bison Grazed",
 unique(vegetation[c("WaterShed", "grazing_treatment")])
 ```
 ```{r}
-rm(veg_cattle)
+# Rename columns to match
+colnames(Meteorological_data)[colnames(Meteorological_data) == "RECYEAR"] <- "RecYear"
+colnames(Meteorological_data)[colnames(Meteorological_data) == "RECMONTH"] <- "RecMonth"  
+colnames(Meteorological_data)[colnames(Meteorological_data) == "RECDAY"] <- "RecDay"
+# Convert temperature to numeric
+Meteorological_data$TAVE <- as.numeric(Meteorological_data$TAVE)
+# Merge vegetation and weather data
+merged_data <- merge(vegetation, 
+                     Meteorological_data[, c("RecYear", "RecMonth", "RecDay", "TAVE")],
+                     by = c("RecYear", "RecMonth", "RecDay"),
+                     all.x = TRUE)
+
+# Calculate yearly average temperature (months 4-10)
+yearly_temp <- aggregate(TAVE ~ RecYear, 
+                        data = merged_data[merged_data$RecMonth >= 4 & merged_data$RecMonth <= 10, ],
+                        FUN = mean, na.rm = TRUE)
+
+# Replace daily temperature with yearly average
+merged_data$TAVE <- NULL
+merged_data <- merge(merged_data, yearly_temp, by = "RecYear", all.x = TRUE)
+
 ```
+```{r}
+# Save data
+write.csv(merged_data, "merged_data.csv", row.names = FALSE)
+```
+
+
 
 
 
