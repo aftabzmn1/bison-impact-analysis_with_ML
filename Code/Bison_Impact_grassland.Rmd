@@ -55,33 +55,27 @@ ifelse(str_starts(vegetation$WaterShed, "n"), "Bison Grazed",
 # Show unique watersheds with their treatment types
 unique(vegetation[c("WaterShed", "grazing_treatment")])
 ```
+Rename columns to match with Meteorological data
 ```{r}
 # Rename columns to match
 colnames(Meteorological_data)[colnames(Meteorological_data) == "RECYEAR"] <- "RecYear"
 colnames(Meteorological_data)[colnames(Meteorological_data) == "RECMONTH"] <- "RecMonth"  
 colnames(Meteorological_data)[colnames(Meteorological_data) == "RECDAY"] <- "RecDay"
-# Convert temperature to numeric
-Meteorological_data$TAVE <- as.numeric(Meteorological_data$TAVE)
-# Merge vegetation and weather data
-merged_data <- merge(vegetation, 
-                     Meteorological_data[, c("RecYear", "RecMonth", "RecDay", "TAVE")],
-                     by = c("RecYear", "RecMonth", "RecDay"),
-                     all.x = TRUE)
+```
 
-# Calculate yearly average temperature (months 4-10)
-yearly_temp <- aggregate(TAVE ~ RecYear, 
-                        data = merged_data[merged_data$RecMonth >= 4 & merged_data$RecMonth <= 10, ],
+```{r}
+# Convert meteorological variables to numeric
+Meteorological_data[c("TAVE", "DHUMID", "DSRAD", "DPPT")] <- lapply(Meteorological_data[c("TAVE", "DHUMID", "DSRAD", "DPPT")], as.numeric)
+
+# Calculate yearly averages directly from meteorological data (months 4-10). create a yearly_temp dataframe with two colums; RecYear and Average of Meteorological data
+yearly_temp <- aggregate(cbind(TAVE,DHUMID,DSRAD,DPPT) ~ RecYear, 
+                        data = Meteorological_data[Meteorological_data$RecMonth >= 4 & Meteorological_data$RecMonth <= 10, ],
                         FUN = mean, na.rm = TRUE)
 
-# Replace daily temperature with yearly average
-merged_data$TAVE <- NULL
-merged_data <- merge(merged_data, yearly_temp, by = "RecYear", all.x = TRUE)
+# Merge vegetation data with yearly averages only
+merged_data <- merge(vegetation, yearly_temp, by = "RecYear", all.x = TRUE)
+```
 
-```
-```{r}
-# Save data
-write.csv(merged_data, "merged_data.csv", row.names = FALSE)
-```
 ```{r}
 # Add fire data to merged dataset by matching watershed names
 merged_data <- merge(merged_data, 
@@ -89,6 +83,7 @@ merged_data <- merge(merged_data,
                      by = "WaterShed",    # match on watershed name
                      all.x = TRUE)        # keep all vegetation records
 ```
+
 ```{r}
 # Save data
 write.csv(merged_data, "merged_data.csv", row.names = FALSE)
