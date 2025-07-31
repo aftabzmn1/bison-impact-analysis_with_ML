@@ -50,12 +50,11 @@ unique(vegetation$WaterShed)
 vegetation$grazing_treatment <- ifelse(str_starts(vegetation$WaterShed, "C"),"Cattle Grazed",
 ifelse(str_starts(vegetation$WaterShed, "n"), "Bison Grazed", 
 "Ungrazed"))
-
 # Show unique watersheds with their treatment types
 unique(vegetation[c("WaterShed", "grazing_treatment")])
 ```
 ```{r}
-rm(vegetation)
+rm(veg_bison)
 ```
 
 
