@@ -11,8 +11,8 @@ library(tidyverse)
 
 load data
 ```{r}
-veg_bison<- read.csv("Data/knb-lter-knz/PVC021.csv")
-veg_cattle <- read.csv("Data/Cattle grazed watersheds/PBG011.csv")
+veg_bison<- read.csv("../Data/knb-lter-knz/PVC021.csv")
+veg_cattle <- read.csv("../Data/Cattle grazed watersheds/PBG011.csv")
 ```
 
 ```{r}
