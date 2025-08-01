@@ -8,15 +8,17 @@ library(pdp)
 ```
 Predict the richness
 ```{r}
-
+final_data <- final_data %>%
+  mutate(across(c(Watershed, Grazing, FireSeason), factor))
 response <- c(
   "richness"
   #"simpson"
   #"shannon"
 )
 predictors <- c(
-  "RecYear", 'FireInterval_yr', 'mean_DPPT', 'mean_DSRAD',
-  'mean_DHUMID' 
+  "Watershed", "RecYear", "mean_temp", "mean_DHUMID", 
+  "mean_DSRAD", "mean_DPPT", "Grazing", "FireInterval_yr", 
+  "FireSeason" 
 )
 
 # Fix: Use all_of() for external vectors.Newer tidyselect versions require all_of() when using external vectors to avoid ambiguity.
