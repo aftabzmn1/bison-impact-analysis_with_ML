@@ -26,7 +26,7 @@ names(veg_cattle)
 ```
 
 ```{r}
-# Rename cattle-grazed dataset column names to match bison-grazed dataset
+# Rename both datasets to use CoverClass
 names(veg_cattle) <- c("DataCode", "RecType", "RecYear", "RecMonth", "RecDay",
                        "WaterShed", "SoilType", "Transect", "Plot", "SpeCode",
                        "AB_genus", "AB_species", "CoverClass", "Pid", "Comments")
