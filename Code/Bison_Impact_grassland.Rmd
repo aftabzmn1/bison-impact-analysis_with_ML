@@ -36,6 +36,9 @@ names(veg_bison)
 names(veg_cattle)
 ```
 ```{r}
+# Ensure both datasets have CoverClass
+names(veg_bison)[13] <- "CoverClass"
+names(veg_cattle)[13] <- "CoverClass"
 #Combine both datasets into one
 vegetation <- rbind(veg_bison, veg_cattle)
 ```
@@ -100,51 +103,36 @@ merged_data <- merge(merged_data,
 ```{r}
 merged_data <- merged_data %>%
   mutate(
-    #create scientific name
-    scientific_name = paste(merged_data$AB_genus, merged_data$AB_species),
-    #convert cover classes to percent cover
-    pctCover = case_match (
-      CoverClass, 
-      1 ~ mean(c(0, 1)),
-      2 ~ mean(c(2, 5)),
-      3 ~ mean(c(5, 25)),
-      4 ~ mean(c(25, 50)),
-      5 ~ mean(c(50, 75)),
-      6 ~ mean(c(75, 95)),
-      7 ~ mean(c(95, 100))
+    scientific_name = paste(AB_genus, AB_species),
+    pctCover = case_when(
+      CoverClass == 1 ~ 0.5,
+      CoverClass == 2 ~ 3.5,
+      CoverClass == 3 ~ 15,
+      CoverClass == 4 ~ 37.5,
+      CoverClass == 5 ~ 62.5,
+      CoverClass == 6 ~ 85,
+      CoverClass == 7 ~ 97.5
     ),
-    
-    #standardize transect IDs
     transect = case_match(
       Transect,
-      "a" ~ "a",
-      "A" ~ "a",
-      "b" ~ "b",
-      "B" ~ "b",
-      "c" ~ "c",
-      "C" ~ "c",
-      "d" ~ "d",
-      "D" ~ "d"),
-    #create plot IDs
-    plot_ID = paste0(WaterShed,
-                     Plot,
-                     transect,
-                     SoilType,
-                     RecYear,
-                     RecMonth,
-                     RecDay))
+      "a" ~ "a", "A" ~ "a",
+      "b" ~ "b", "B" ~ "b", 
+      "c" ~ "c", "C" ~ "c",
+      "d" ~ "d", "D" ~ "d"),
+    plot_ID = paste0(WaterShed, Plot, transect, SoilType, RecYear, RecMonth, RecDay)
+  )
 ```
 
 ```{r}
-spp_matrix <- merged_data %>% 
-  #remove duplicate row
-  filter(!(plot_ID == "004b1dt2024816" &
-           scientific_name == "teucri canad" &
-           CoverClass == 1)) %>% 
+spp_matrix <- merged_data %>%
+  filter(!(plot_ID == "004b1dt2024816" & 
+           scientific_name == "teucri canad" & 
+           CoverClass == 1)) %>%
   pivot_wider(id_cols = plot_ID,
               names_from = scientific_name,
               values_from = pctCover,
-              values_fill = 0)
+              values_fill = 0,
+              values_fn = mean)
 ```
 
 
