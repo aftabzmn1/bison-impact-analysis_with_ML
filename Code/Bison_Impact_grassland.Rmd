@@ -144,7 +144,9 @@ plot_data <- merged_data %>%
   select(-scientific_name, -pctCover, -SpeCode, -CoverClass, -species_name) %>%
   distinct()
 
-final_data <- merge(diversityIndex, plot_data, by = "plot_ID", all.x = TRUE)
+#final_data <- merge(diversityIndex, plot_data, by = "plot_ID", all.x = TRUE)
+#Use inner_join to keep only matching records
+final_data <- inner_join(diversityIndex, plot_data, by = "plot_ID")
 ```
 
 
