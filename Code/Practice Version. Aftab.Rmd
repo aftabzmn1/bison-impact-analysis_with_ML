@@ -1,39 +1,45 @@
 ---
-title: "Cattle_Bison_Ungrazed_Vegetation"
+title: "test"
 output: html_document
 date: "2025-07-31"
 ---
 
-load packages.tidyverse is a collection of R packages (like dplyr, ggplot2, readr, etc.) designed for data science.
 ```{r}
 library(tidyverse)
-
+library(vegan)
 ```
-load data
+
 ```{r}
 veg_bison<- read.csv("../Data/knb-lter-knz/PVC021.csv")
-veg_cattle <- read.csv("../Data/Cattle grazed watersheds/PBG011.csv")
-Meteorological_data <- read.csv("../Data/Meteorological data from the konza prairie/AWE012.csv")
-watersheds<- read.csv("../Data/Watersheds.csv")
+veg_cattle <- read.csv("../Data/Cattle grazed watersheds/PBG011.csv") %>%
+  relocate(Pid, .after = CoverClass)
 ```
+
 ```{r}
 summary (veg_bison)
 summary (veg_cattle)
 ```
+
 ```{r}
 names(veg_bison)
 names(veg_cattle)
 ```
+
 ```{r}
 # Rename cattle-grazed dataset column names to match bison-grazed dataset
 names(veg_cattle) <- c("DataCode", "RecType", "RecYear", "RecMonth", "RecDay",
                        "WaterShed", "SoilType", "Transect", "Plot", "SpeCode",
-                       "AB_genus", "AB_species", "Cover", "Pid", "Comments")
+                       "AB_genus", "AB_species", "CoverClass", "Pid", "Comments")
+names(veg_bison) <- c("DataCode", "RecType", "RecYear", "RecMonth", "RecDay",
+                      "WaterShed", "SoilType", "Transect", "Plot", "SpeCode",
+                      "AB_genus", "AB_species", "CoverClass", "Pid", "Comments")
 ```
+
 ```{r}
 names(veg_bison)
 names(veg_cattle)
 ```
+
 ```{r}
 #Combine both datasets into one
 vegetation <- rbind(veg_bison, veg_cattle)
@@ -49,8 +55,70 @@ unique(vegetation$WaterShed)
 ```{r}
 # Categorize watersheds
 vegetation$grazing_treatment <- ifelse(str_starts(vegetation$WaterShed, "C"),"Cattle Grazed",
-ifelse(str_starts(vegetation$WaterShed, "n"), "Bison Grazed", 
-"Ungrazed"))
+                                       ifelse(str_starts(vegetation$WaterShed, "n"), "Bison Grazed", 
+                                              "Ungrazed"))
+
 # Show unique watersheds with their treatment types
 unique(vegetation[c("WaterShed", "grazing_treatment")])
 ```
+
+
+```{r}
+vegetation <- vegetation %>%
+  mutate(
+    #create scientific name
+    scientific_name = paste(vegetation$AB_genus, vegetation$AB_species),
+    #convert cover classes to percent cover
+    pctCover = case_match (
+      CoverClass, 
+      1 ~ mean(c(0, 1)),
+      2 ~ mean(c(2, 5)),
+      3 ~ mean(c(5, 25)),
+      4 ~ mean(c(25, 50)),
+      5 ~ mean(c(50, 75)),
+      6 ~ mean(c(75, 95)),
+      7 ~ mean(c(95, 100))
+    ),
+    
+    #standardize transect IDs
+    transect = case_match(
+      Transect,
+      "a" ~ "a",
+      "A" ~ "a",
+      "b" ~ "b",
+      "B" ~ "b",
+      "c" ~ "c",
+      "C" ~ "c",
+      "d" ~ "d",
+      "D" ~ "d"),
+    #create plot IDs
+    plot_ID = paste0(WaterShed,
+                     Plot,
+                     transect,
+                     SoilType,
+                     RecYear,
+                     RecMonth,
+                     RecDay))
+```
+
+```{r}
+spp_matrix <- vegetation %>% 
+  #remove duplicate row
+  filter(!(plot_ID == "004b1dt2024816" &
+           scientific_name == "teucri canad" &
+           CoverClass == 1)) %>% 
+  pivot_wider(id_cols = plot_ID,
+              names_from = scientific_name,
+              values_from = pctCover,
+              values_fill = 0)
+```
+
+```{r}
+diversityIndex <-data.frame(
+  plot_ID=spp_matrix[ ,1],
+  richness=specnumber(spp_matrix[,-1]),
+  simpsons = diversity(spp_matrix[,-1], index ="simpson"),
+  shanon = diversity(spp_matrix[,-1], index ="shannon")
+)
+```
+
