@@ -97,9 +97,7 @@ merged_data <- merge(merged_data,
                      by = "WaterShed",    # match on watershed name
                      all.x = TRUE)        # keep all vegetation records
 ```
-```{r}
 
-```
 ```{r}
 merged_data <- merged_data %>%
   mutate(
@@ -142,8 +140,11 @@ merged_data$AB_species<- NULL
 ```
 
 ```{r}
-# Merge with diversityIndex as primary dataframe, keep all diversity rows
-final_data <- merge(diversityIndex, merged_data, by = "plot_ID", all.x = TRUE)
+plot_data <- merged_data %>%
+  select(-scientific_name, -pctCover, -SpeCode, -CoverClass, -species_name) %>%
+  distinct()
+
+final_data <- merge(diversityIndex, plot_data, by = "plot_ID", all.x = TRUE)
 ```
 
 
