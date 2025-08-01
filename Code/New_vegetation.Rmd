@@ -14,8 +14,11 @@ library(vegan)
 load data
 ```{r}
 veg_bison<- read.csv("../Data/knb-lter-knz/PVC021.csv")
-veg_cattle <- read.csv("../Data/Cattle grazed watersheds/PBG011.csv")
+veg_cattle <- read.csv("../Data/Cattle grazed watersheds/PBG011.csv") %>%
+  relocate(Pid, .after = CoverClass)
+
 ```
+
 Rename cattle-grazed dataset column names to match bison-grazed dataset
 
 ```{r}
@@ -82,8 +85,8 @@ spp_matrix <- vegetation %>%
   pivot_wider(id_cols = plot_ID,
               names_from = scientific_name,
               values_from = pctCover,
-              values_fill = 0,
-              values_fn = mean)
+              values_fill = 0)
+              #values_fn = mean)
 #sum how many rows of spp matrix are 0
 sum(rowSums(spp_matrix[ , -1], na.rm = TRUE) == 0)
   

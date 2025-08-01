@@ -1,0 +1,44 @@
+---
+title: "RandomForest"
+output: html_document
+---
+```{r}
+library(randomForest)
+library(pdp)
+```
+Predict the richness
+```{r}
+
+response <- c(
+  "richness"
+  #"simpson"
+  #"shannon"
+)
+predictors <- c(
+  "RecYear", 'FireInterval_yr', 'mean_DPPT', 'mean_DSRAD',
+  'mean_DHUMID' 
+)
+
+# Fix: Use all_of() for external vectors.Newer tidyselect versions require all_of() when using external vectors to avoid ambiguity.
+data_subset <- final_data %>% 
+  select(all_of(predictors), all_of(response))
+
+rf_reg <- randomForest(as.formula(paste(response, "~ .")),
+                       data = data_subset,
+                       ntree = 500,
+                       importance = TRUE)
+
+print(rf_reg)                    # Model summary
+importance(rf_reg)               # Variable importance
+varImpPlot(rf_reg)              # Importance plot
+
+# PDP ANALYSIS:
+# Single variable PDPs
+for(var in predictors) {
+  pdp_plot <- partial(rf_reg, pred.var = var, train = data_subset)
+  print(autoplot(pdp_plot, main = paste("PDP for", var)))
+}
+```
+
+
+
