@@ -30,11 +30,10 @@ names(veg_cattle)
 names(veg_cattle) <- c("DataCode", "RecType", "RecYear", "RecMonth", "RecDay",
                        "WaterShed", "SoilType", "Transect", "Plot", "SpeCode",
                        "AB_genus", "AB_species", "CoverClass", "Pid", "Comments")
-```
-```{r}
 names(veg_bison)
 names(veg_cattle)
 ```
+
 ```{r}
 # Ensure both datasets have CoverClass
 names(veg_bison)[13] <- "CoverClass"
@@ -98,41 +97,6 @@ merged_data <- merge(merged_data,
                      all.x = TRUE)        # keep all vegetation records
 ```
 
-```{r}
-merged_data <- merged_data %>%
-  mutate(
-    scientific_name = paste(AB_genus, AB_species),
-    pctCover = case_when(
-      CoverClass == 1 ~ 0.5,
-      CoverClass == 2 ~ 3.5,
-      CoverClass == 3 ~ 15,
-      CoverClass == 4 ~ 37.5,
-      CoverClass == 5 ~ 62.5,
-      CoverClass == 6 ~ 85,
-      CoverClass == 7 ~ 97.5
-    ),
-    transect = case_match(
-      Transect,
-      "a" ~ "a", "A" ~ "a",
-      "b" ~ "b", "B" ~ "b", 
-      "c" ~ "c", "C" ~ "c",
-      "d" ~ "d", "D" ~ "d"),
-    plot_ID = paste0(WaterShed, Plot, transect, SoilType, RecYear, RecMonth, RecDay)
-  )
-```
-
-```{r}
-spp_matrix <- merged_data %>%
-  filter(!(plot_ID == "004b1dt2024816" & 
-           scientific_name == "teucri canad" & 
-           CoverClass == 1)) %>%
-  pivot_wider(id_cols = plot_ID,
-              names_from = scientific_name,
-              values_from = pctCover,
-              values_fill = 0,
-              values_fn = mean)
-```
-
 
 ```{r}
 merged_data$AB_genus<- NULL 
@@ -140,10 +104,6 @@ merged_data$AB_species<- NULL
 ```
 
 ```{r}
-plot_data <- merged_data %>%
-  select(-scientific_name, -pctCover, -SpeCode, -CoverClass, -species_name) %>%
-  distinct()
-
 final_data <- merge(diversityIndex, plot_data, by = "plot_ID", all.x = TRUE)
 ```
 
