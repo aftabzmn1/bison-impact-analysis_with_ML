@@ -36,10 +36,41 @@ varImpPlot(rf_reg)              # Importance plot
 
 # PDP ANALYSIS:
 # Single variable PDPs
+# for(var in predictors) {
+#   pdp_plot <- partial(rf_reg, pred.var = var, train = data_subset)
+#   print(autoplot(pdp_plot, main = paste("PDP for", var)))
+# PDP ANALYSIS with colors for watersheds:
+```
+```{r}
+
+
+
 for(var in predictors) {
   pdp_plot <- partial(rf_reg, pred.var = var, train = data_subset)
-  print(autoplot(pdp_plot, main = paste("PDP for", var)))
+  
+  # Special handling for Watershed to add colors
+  if(var == "Watershed") {
+    # Add treatment colors
+    pdp_plot$treatment <- case_when(
+    str_starts(pdp_plot$Watershed, "N") ~ "Bison",      # Capital N
+    str_starts(pdp_plot$Watershed, "C") ~ "Cattle",     # Capital C  
+  TRUE ~ "Ungrazed"
+)
+    
+    
+    # Custom plot with colors
+    p <- ggplot(pdp_plot, aes(x = Watershed, y = yhat, color = treatment)) +
+      geom_point(size = 3) +
+      scale_color_manual(values = c("Bison" = "green", "Cattle" = "red", "Ungrazed" = "blue")) +
+      labs(title = "PDP for Watershed", y = "Predicted Simpson") +
+      theme(axis.text.x = element_text(angle = 45, hjust = 1))
+    print(p)
+  } else {
+    # Regular autoplot for other variables
+    print(autoplot(pdp_plot, main = paste("PDP for", var)))
+  }
 }
+
 ```
 
 
