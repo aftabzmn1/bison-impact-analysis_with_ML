@@ -8,19 +8,14 @@ load packages.tidyverse is a collection of R packages (like dplyr, ggplot2, read
 ```{r}
 library(tidyverse)
 library(vegan)
-
 ```
-
 load data
 ```{r}
 veg_bison<- read.csv("../Data/knb-lter-knz/PVC021.csv")
 veg_cattle <- read.csv("../Data/Cattle grazed watersheds/PBG011.csv") %>%
   relocate(Pid, .after = CoverClass)
-
 ```
-
 Rename cattle-grazed dataset column names to match bison-grazed dataset
-
 ```{r}
 names(veg_cattle) <- c("DataCode", "RecType", "RecYear", "RecMonth", "RecDay",
                        "WaterShed", "SoilType", "Transect", "Plot", "SpeCode",
@@ -35,9 +30,7 @@ Combine both datasets into one
 ```{r}
 vegetation <- rbind(veg_bison, veg_cattle)
 ```
-
 Create plot_ID
-
 ```{r}
 vegetation <- vegetation %>%
   mutate(

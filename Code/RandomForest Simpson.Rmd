@@ -6,13 +6,13 @@ output: html_document
 library(randomForest)
 library(pdp)
 ```
-Predict the richness
+Predict the simpson
 ```{r}
 final_data <- final_data %>%
   mutate(across(c(Watershed, Grazing, FireSeason), factor))
 response <- c(
-  "richness"
-  #"simpson"
+  #"richness"
+  "simpson"
   #"shannon"
 )
 predictors <- c(
