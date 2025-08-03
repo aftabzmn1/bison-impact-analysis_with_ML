@@ -47,10 +47,15 @@ Tallgrass prairies are among the most threatened ecosystems in North America. Th
 - **Watershed** ranked second, showing clear spatial differences—particularly in bison-grazed areas.
 - **FireInterval_yr** and **FireSeason** had moderate influence, supporting the role of fire in shaping plant communities.
 
-### Diversity Metric Comparison
+### 🔎 Diversity Metric Comparison
 
-- **Species Richness** had the lowest prediction error among the three metrics, followed by **Shannon**, then **Simpson**.
-- This suggests that richness may be the most responsive and stable indicator across treatments and time.
+- **Species Richness** had the **lowest prediction error**, followed by **Shannon**, then **Simpson**, suggesting Richness is the most robust and stable metric across space and time.
+- While **RecYear** and **Watershed** were consistently important across all models, the **importance of predictors varied**:
+  - **FireInterval_yr** was more influential for **Simpson**, reflecting its sensitivity to community evenness.
+  - **Mean temperature** and **precipitation** had greater influence in the **Shannon model**, pointing to environmental control on species abundance distribution.
+  - **Richness** was less sensitive to environmental fluctuations and more driven by broad spatial (Watershed) and temporal (RecYear) patterns.
+
+These differences highlight the complementary ecological insights each metric provides.
 
 ### Literature Alignment
 
