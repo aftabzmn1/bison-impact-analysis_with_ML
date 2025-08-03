@@ -63,6 +63,11 @@ Using data from **39 watersheds**, we extended the findings of *Ratajczak et al.
 - **Bison grazing** leads to a clear and sustained increase in plant diversity.
 - **Cattle-grazed areas** also showed a **positive trend**, with a **steeper slope** than reported in the paper—likely due to increased watershed coverage and spatial resolution.
 
+## 🖼️ Visual Summary
+
+![Richness Response to Grazing Over Time](Output/richness_response/richness_response_plot)
+
+
 ## 📚 Reference
 
 Ratajczak et al. (2022). *Reintroducing bison results in long-running and resilient increases in grassland diversity*. Proceedings of the National Academy of Sciences. [https://doi.org/10.1073/pnas.2210433119](https://doi.org/10.1073/pnas.2210433119)
