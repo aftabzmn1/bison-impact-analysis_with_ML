@@ -59,7 +59,8 @@ These differences highlight the complementary ecological insights each metric pr
 
 ## 🖼️ Visual Summary
 
-![Random Forest Analysis for Simpson](Output/RF and PDP Analysis/Simpson/rf_Analysis_Simpson.png)
+![Random Forest Analysis for Simpson](Output/RF%20and%20PDP%20Analysis/Simpson/rf_Analysis_Simpson.png)
+)
 ![Partial Dependency Plot Analysis for Simpson RecYear](Output/RF and PDP Analysis/Simpson/PDP_RecYear_Simpson.png)
 ![Partial Dependency Plot Analysis for Simpson Watershed](Output/RF and PDP Analysis/Simpson/PDP_Watershed_Simpson.png)
 
