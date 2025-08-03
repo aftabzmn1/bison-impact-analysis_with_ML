@@ -11,7 +11,8 @@ Tallgrass prairies are among the most threatened ecosystems in North America. Th
 - Quantify plant diversity using **Richness**, **Shannon**, and **Simpson** indices.
 - Integrate vegetation, climate, and fire datasets into a unified analysis.
 - Use **Random Forest models** to identify key environmental drivers of diversity.
-- Evaluate the **resilience** of species diversity to extreme drought events (e.g., 2011–2012).
+- Replicate long-term diversity trends from literature across a larger number of watersheds.
+- Align results with key findings from *Ratajczak et al. (2022)*
 
 ## 🗂️ Data Sources
 
