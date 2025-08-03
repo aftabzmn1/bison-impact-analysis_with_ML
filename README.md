@@ -57,6 +57,12 @@ Tallgrass prairies are among the most threatened ecosystems in North America. Th
 
 These differences highlight the complementary ecological insights each metric provides.
 
+## 🖼️ Visual Summary
+
+![Random Forest Analysis for Simpson](Output/RF and PDP Analysis/Simpson/rf_Analysis_Simpson.png)
+![Partial Dependency Plot Analysis for Simpson RecYear](Output/RF and PDP Analysis/Simpson/PDP_RecYear_Simpson.png)
+![Partial Dependency Plot Analysis for Simpson Watershed](Output/RF and PDP Analysis/Simpson/PDP_Watershed_Simpson.png)
+
 ### Literature Alignment
 
 Using data from **39 watersheds**, we extended the findings of *Ratajczak et al. (2022)*. Our results confirm that:
