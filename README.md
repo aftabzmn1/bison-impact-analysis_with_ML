@@ -39,11 +39,24 @@ Tallgrass prairies are among the most threatened ecosystems in North America. Th
 - Aggregates seasonal climate averages (April–October).
 - Merges climate, fire, and vegetation data into a single analysis-ready file.
 
-## 📈 Preliminary Results
+## 📊 Preliminary Results
 
-- **Bison grazing** increased native plant richness by **103%** (plot scale) over 29 years.
-- Biodiversity gains under bison were **resilient** to extreme drought (2011–2012).
-- **Random Forest analysis** shows `RecYear`, `Watershed`, and `FireInterval_yr` as key predictors of Simpson diversity.
+### Key Insights
+
+- **RecYear** was the most important predictor across all diversity metrics (Richness, Simpson, Shannon), indicating strong temporal trends.
+- **Watershed** ranked second, showing clear spatial differences—particularly in bison-grazed areas.
+- **FireInterval_yr** and **FireSeason** had moderate influence, supporting the role of fire in shaping plant communities.
+
+### Diversity Metric Comparison
+
+- **Species Richness** had the lowest prediction error among the three metrics, followed by **Shannon**, then **Simpson**.
+- This suggests that richness may be the most responsive and stable indicator across treatments and time.
+
+### Literature Alignment
+
+Using data from **39 watersheds**, we extended the findings of *Ratajczak et al. (2022)*. Our results confirm that:
+- **Bison grazing** leads to a clear and sustained increase in plant diversity.
+- **Cattle-grazed areas** also showed a **positive trend**, with a **steeper slope** than reported in the paper—likely due to increased watershed coverage and spatial resolution.
 
 ## 📚 Reference
 
