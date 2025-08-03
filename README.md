@@ -65,7 +65,7 @@ Using data from **39 watersheds**, we extended the findings of *Ratajczak et al.
 
 ## 🖼️ Visual Summary
 
-![Richness Response to Grazing Over Time](Output/richness_response/richness_response_plot)
+![Richness Response to Grazing Over Time](Output/richness_response/richness_response_plot.png)
 
 
 ## 📚 Reference
